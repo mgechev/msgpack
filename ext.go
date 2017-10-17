@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/gsamokovarov/msgpack/codes"
 )
 
 var extTypes = make(map[int8]reflect.Type)

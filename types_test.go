@@ -11,8 +11,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vmihailenco/msgpack"
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/gsamokovarov/msgpack"
+	"github.com/gsamokovarov/msgpack/codes"
 )
 
 //------------------------------------------------------------------------------
@@ -91,6 +91,11 @@ type CustomEncoderField struct {
 
 //------------------------------------------------------------------------------
 
+type JSONFallbackTest struct {
+	Foo string `json:"foo,omitempty"`
+	Bar string `json:",omitempty"`
+}
+
 type OmitEmptyTest struct {
 	Foo string `msgpack:",omitempty"`
 	Bar string `msgpack:",omitempty"`
@@ -150,6 +155,8 @@ var encoderTests = []encoderTest{
 
 	{OmitEmptyTest{}, "80"},
 	{&OmitEmptyTest{Foo: "hello"}, "81a3466f6fa568656c6c6f"},
+
+	{&JSONFallbackTest{Foo: "hello"}, "81a3666f6fa568656c6c6f"},
 
 	{&InlineTest{OmitEmptyTest: OmitEmptyTest{Bar: "world"}}, "81a3426172a5776f726c64"},
 	{&InlinePtrTest{OmitEmptyTest: &OmitEmptyTest{Bar: "world"}}, "81a3426172a5776f726c64"},
@@ -263,7 +270,7 @@ func (t *typeTest) assertErr(err error, s string) {
 
 var (
 	intSlice   = make([]int, 0, 3)
-	repoURL, _ = url.Parse("https://github.com/vmihailenco/msgpack")
+	repoURL, _ = url.Parse("https://github.com/gsamokovarov/msgpack")
 	typeTests  = []typeTest{
 		{in: make(chan bool), encErr: "msgpack: Encode(unsupported chan bool)"},
 

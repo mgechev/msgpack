@@ -144,7 +144,13 @@ func getFields(typ reflect.Type) *fields {
 	for i := 0; i < numField; i++ {
 		f := typ.Field(i)
 
-		name, opt := parseTag(f.Tag.Get("msgpack"))
+		// Fallback to json tag if no `msgpack:` is specified.
+		tag, ok := f.Tag.Lookup("msgpack")
+		if !ok {
+			tag = f.Tag.Get("json")
+		}
+
+		name, opt := parseTag(tag)
 		if name == "-" {
 			continue
 		}
