@@ -9,6 +9,8 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/go-openapi/strfmt"
+
 	"github.com/gsamokovarov/msgpack/codes"
 )
 
@@ -166,6 +168,11 @@ func (d *Decoder) decode(dst interface{}) error {
 	case *time.Time:
 		if v != nil {
 			*v, err = d.DecodeTime()
+			return err
+		}
+	case *strfmt.DateTime:
+		if v != nil {
+			*v, err = d.DecodeDateTime()
 			return err
 		}
 	}

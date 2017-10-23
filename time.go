@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/gsamokovarov/msgpack/codes"
 )
 
@@ -14,6 +15,10 @@ var timeExtId int8 = -1
 func init() {
 	timeType := reflect.TypeOf((*time.Time)(nil)).Elem()
 	registerExt(timeExtId, timeType, encodeTimeValue, decodeTimeValue)
+}
+
+func (e *Encoder) EncodeDateTime(tm strfmt.DateTime) error {
+	return e.EncodeTime(time.Time(tm))
 }
 
 func (e *Encoder) EncodeTime(tm time.Time) error {
@@ -46,6 +51,14 @@ func (e *Encoder) encodeTime(tm time.Time) []byte {
 	binary.BigEndian.PutUint32(b, uint32(tm.Nanosecond()))
 	binary.BigEndian.PutUint64(b[4:], uint64(secs))
 	return b
+}
+
+func (d *Decoder) DecodeDateTime() (strfmt.DateTime, error) {
+	result, err := d.DecodeTime()
+	if err != nil {
+		return strfmt.DateTime{}, err
+	}
+	return strfmt.DateTime(result), nil
 }
 
 func (d *Decoder) DecodeTime() (time.Time, error) {

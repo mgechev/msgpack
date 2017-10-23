@@ -6,6 +6,7 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/gsamokovarov/msgpack/codes"
 )
 
@@ -104,6 +105,8 @@ func (e *Encoder) encode(v interface{}) error {
 		return e.EncodeInt(int64(v))
 	case time.Time:
 		return e.EncodeTime(v)
+	case strfmt.DateTime:
+		return e.EncodeDateTime(v)
 	}
 	return e.EncodeValue(reflect.ValueOf(v))
 }
