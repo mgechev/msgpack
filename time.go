@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/go-openapi/strfmt"
-	"github.com/gsamokovarov/msgpack/codes"
+	"github.com/mgechev/msgpack/codes"
 )
 
 var timeExtId int8 = -1

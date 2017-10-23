@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/go-openapi/strfmt"
-	"github.com/gsamokovarov/msgpack/codes"
+	"github.com/mgechev/msgpack/codes"
 )
 
 type writer interface {
