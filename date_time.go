@@ -7,9 +7,11 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
+var dateTimeExtId int8 = 2
+
 func init() {
 	dateTimeType := reflect.TypeOf((*strfmt.DateTime)(nil)).Elem()
-	registerExt(timeExtId, dateTimeType, encodeDateTimeValue, decodeDateTimeValue)
+	registerExt(dateTimeExtId, dateTimeType, encodeDateTimeValue, decodeDateTimeValue)
 }
 
 func encodeDateTimeValue(e *Encoder, v reflect.Value) error {
@@ -25,4 +27,16 @@ func decodeDateTimeValue(d *Decoder, v reflect.Value) error {
 	}
 	v.Set(reflect.ValueOf(tm))
 	return nil
+}
+
+func (e *Encoder) EncodeDateTime(tm strfmt.DateTime) error {
+	return e.EncodeTime(time.Time(tm))
+}
+
+func (d *Decoder) DecodeDateTime() (strfmt.DateTime, error) {
+	result, err := d.DecodeTime()
+	if err != nil {
+		return strfmt.DateTime{}, err
+	}
+	return strfmt.DateTime(result), nil
 }
