@@ -8,7 +8,7 @@ The only difference from the original implementation by [@vmihailenco](https://g
 Since JavaScript cannot accurately represent uint64 we don't need to use 8 byte `time.Time` serialization.
 
 Supports:
-- Primitives, arrays, maps, structs, time.Time, strfmt.DateTime and interface{}.
+- Primitives, arrays, maps, structs, `time.Time`, `strfmt.DateTime` and `interface{}`.
 - Appengine *datastore.Key and datastore.Cursor.
 - [CustomEncoder](https://godoc.org/github.com/mgechev/msgpack#example-CustomEncoder)/CustomDecoder interfaces for custom encoding.
 - [Extensions](https://godoc.org/github.com/mgechev/msgpack#example-RegisterExt) to encode type information.
