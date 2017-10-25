@@ -109,7 +109,6 @@ func (e *Encoder) encode(v interface{}) error {
 	case strfmt.DateTime:
 		return e.EncodeDateTime(v)
 	}
-	fmt.Println("##################### LALALALAAAAAAAAAAAAAAAAAAAAAAA", v)
 	return e.EncodeValue(reflect.ValueOf(v))
 }
 
