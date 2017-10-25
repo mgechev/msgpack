@@ -2,7 +2,6 @@ package msgpack
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"reflect"
 	"time"
